@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function validateForm() {
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var email = document.getElementById("email").value;
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var errorMessages = [];
+
+            if (firstName === "") {
+                errorMessages.push("First Name is required");
+            }
+
+            if (lastName === "") {
+                errorMessages.push("Last Name is required");
+            }
+
+            if (email === "") {
+                errorMessages.push("Email is required");
+            } else {
+                var emailRegex = /\S+@\S+\.\S+/;
+                if (!emailRegex.test(email)) {
+                    errorMessages.push("Enter a valid email address");
+                }
+            }
+
+            if (username === "") {
+                errorMessages.push("Username is required");
+            }
+
+            if (password === "") {
+                errorMessages.push("Password is required");
+            } else if (password.length < 6) {
+                errorMessages.push("Password should be at least 6 characters long");
+            }
+
+            if (confirmPassword === "") {
+                errorMessages.push("Please confirm your password");
+            } else if (confirmPassword !== password) {
+                errorMessages.push("Passwords do not match");
+            }
+
+            if (errorMessages.length > 0) {
+                var errorContainer = document.getElementById("errorContainer");
+                errorContainer.innerHTML = "";
+
+                for (var i = 0; i < errorMessages.length; i++) {
+                    var errorMessage = document.createElement("p");
+                    errorMessage.textContent = errorMessages[i];
+                    errorContainer.appendChild(errorMessage);
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    
+    <div class="registration-container">
+        <div class="registration-header">
+            <h1>Welcome to PropertEase</h1>
+            <p>Create your account to get started</p>
+        </div>
+
+        <form action="registration.php" method="POST" onsubmit="return validateForm()" class="registration-form">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Firstname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="lastName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Exampple@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="accountType">Account Type</label>
+                <select id="accountType" name="accountType">
+                    <option value="buyer">Buyer</option>
+                    <option value="seller">Seller</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+
+        <div id="errorContainer" class="error-container"></div>
+    </div>
+</body>
+<div class="footer">
+    ⓒ 2023 PropertEase
+</div>
+</html>
